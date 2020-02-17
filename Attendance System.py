@@ -137,4 +137,6 @@ try:
     #scanStudent(mycursor)
     
 finally:
+    lcd.clear()
     GPIO.cleanup()
+    

@@ -59,7 +59,7 @@ def showData(mycursor, table):
         print(x)
 #showData(mycursor,"students")
 
-def scanStudent(mycursor):
+'''def scanStudent(mycursor):
     #print("Scan your Card")
     lcd.write_string("Scan your Card\n\r")
     id,name = reader.read()
@@ -71,7 +71,7 @@ def scanStudent(mycursor):
         lcd.write_string(x[3] + "\n\r" + x[1] + "\n\r" + x[2])
     #print("\nScan your Card")
     lcd.clear()
-    return id
+    return id'''
 
 
 def findClassClub(mycursor):
@@ -80,7 +80,7 @@ def findClassClub(mycursor):
     mycursor.execute("SELECT id FROM classesClubs WHERE name = '" + classClub +"'")
     myresult = mycursor.fetchall()
     #print(myresult)
-    classID = 123
+    classID = 0
     for x in myresult:
         classID = x[0]
     #print(classID)
@@ -95,7 +95,27 @@ def inputAttendance(mycursor, studentid, classid):
     mydb.commit()
 
 def checkAttendance(mycursor):
-    print("Place ur card, then press the button to start checking attendance")
+    print("Scan your Card")
+    lcd.write_string("Scan your Card\n\r")
+    classID = findClassClub(mycursor)
+    while True:
+        id,name = reader.read_no_block()
+        if button.is_pressed:
+            break
+        if id != None:
+            mycursor.execute("SELECT * FROM students WHERE id = " + str(id))
+
+            myresult = mycursor.fetchall()
+
+            for x in myresult:
+                lcd.clear()
+                print(x[0]+ " : "+ str(id))
+                lcd.write_string(x[3] + "\n\r" + x[2])
+            sleep(1)
+            print("\nScan your Card")
+            lcd.clear()
+            inputAttendance(mycursor, id, classID)
+    '''print("Place ur card, then press the button to start checking attendance")
     sleep(3)
     classID = findClassClub(mycursor)
     while True:
@@ -106,7 +126,7 @@ def checkAttendance(mycursor):
             #PressButton to Check press again to check the next student
         else:
             inputAttendance(mycursor, studentID, classID)
-            studentID = "Does NOT Exist"
+            studentID = "Does NOT Exist"'''
 
 try:
     showTables(mycursor)

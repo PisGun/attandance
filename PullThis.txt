@@ -1,2 +1,6 @@
 Pull this file
+<<<<<<< HEAD
 
+=======
+Finish
+>>>>>>> 15850e18d2f77ad3e6fd9f040a203728bf3fd53d

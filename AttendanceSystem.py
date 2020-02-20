@@ -42,7 +42,7 @@ def addStudent(mycursor, fName, lName, nName):
     print(q)
     mycursor.execute(q)
     mydb.commit()
-#addStudent(mycursor, 'Siriwat', 'Jaichobchune', 'Vinze')
+
     
 def addClassClub(mycursor, id, name, teacher):
     mycursor.execute("INSERT INTO classesClubs(id, name, teacher) VALUES('" + str(id) + "' , '" + name + "', '" + teacher + "')")
@@ -52,9 +52,7 @@ def addClassClub(mycursor, id, name, teacher):
     
 def showData(mycursor, table):
     mycursor.execute("SELECT * FROM "+ table)
-    
     myresult = mycursor.fetchall()
-    
     for x in myresult:
         print(x)
 #showData(mycursor,"students")
@@ -104,7 +102,8 @@ def checkAttendance(mycursor):
             break
         if id != None:
             mycursor.execute("SELECT * FROM students WHERE id = " + str(id))
-
+            print("Next ")
+            sleep(2)
             myresult = mycursor.fetchall()
 
             for x in myresult:
@@ -135,7 +134,7 @@ try:
     #inputAttendance(mycursor, 132, 1312)
     #findClassClub(mycursor)
     #scanStudent(mycursor)
-    
+    #addStudent(mycursor, 'Gordon', 'Watson', 'Gordy')
 finally:
     lcd.clear()
     showData(mycursor, "attendance")

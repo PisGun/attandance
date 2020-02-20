@@ -26,7 +26,6 @@ def className(mycursor, classID):
     mycursor.execute("SELECT name FROM classesClubs WHERE id = '" + classID +"'" )  
     myresult = mycursor.fetchall()
     return myresult
-
         
 #create the app: __name__ is always "__main__"
 app = Flask(__name__)
@@ -34,13 +33,13 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     data = showData(mycursor, "attendance")
-    tableInWeb = "<center><table><tr><th>StudentID</th><th>ClassID</th><th>Time</th></tr>"
+    tableInWeb = "<center><table><tr><th>Name      </th><th>Class</th><th>Time</th></tr>"
     for x in data:
         student = studentName(mycursor, str(x[0]))
         classname = className(mycursor, str(x[1]))
         tableInWeb = tableInWeb + "<tr><td> " + str(student[0][0]) + "</td><td> " + str(classname[0][0]) + "</td><td>" + str(x[2]) + "</td></tr>"
 
-    return "<h1><center> HTML is a programming LANGUAGE </center></h1>" + tableInWeb + "</table></center>"
+    return "<h1><center> Attendance Table </center></h1>" + tableInWeb + "</table></center>"
 #Start the app, this should be the last line
 if __name__ == "__main__":
     app.run()

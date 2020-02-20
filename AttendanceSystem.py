@@ -72,10 +72,8 @@ def showData(mycursor, table):
     return id'''
 
 
-def findClassClub(mycursor):
-    print("Which class?")
-    classClub = input()
-    mycursor.execute("SELECT id FROM classesClubs WHERE name = '" + classClub +"'")
+def findClassClub(mycursor, input):
+    mycursor.execute("SELECT id FROM classesClubs WHERE name = '" + input +"'")
     myresult = mycursor.fetchall()
     #print(myresult)
     classID = 0
@@ -93,9 +91,11 @@ def inputAttendance(mycursor, studentid, classid):
     mydb.commit()
 
 def checkAttendance(mycursor):
-    print("Scan your Card")
-    lcd.write_string("Scan your Card\n\r")
-    classID = findClassClub(mycursor)
+    print("Which class?")
+    classClub = input()
+    classID = findClassClub(mycursor, classClub)
+    print("Taking attendance for " + classClub)
+    lcd.write_string("Taking attendance for " + classClub)
     while True:
         id,name = reader.read_no_block()
         if button.is_pressed:
@@ -111,21 +111,10 @@ def checkAttendance(mycursor):
                 print(x[0]+ " : "+ str(id))
                 lcd.write_string(x[3] + "\n\r" + x[2])
             sleep(1)
-            print("\nScan your Card")
+            print("\nTaking attendance for " + classClub)
+            lcd.write_string("Taking attendance for " + classClub)
             lcd.clear()
             inputAttendance(mycursor, id, classID)
-    '''print("Place ur card, then press the button to start checking attendance")
-    sleep(3)
-    classID = findClassClub(mycursor)
-    while True:
-        studentID = scanStudent(mycursor)
-        print(studentID)
-        if studentID == "Does NOT Exist":
-            print(studentID)
-            #PressButton to Check press again to check the next student
-        else:
-            inputAttendance(mycursor, studentID, classID)
-            studentID = "Does NOT Exist"'''
 
 try:
     showTables(mycursor)
